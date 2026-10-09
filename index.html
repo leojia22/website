@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Leonard Jia</title>
   <meta name="description" content="Hey, I'm Leonard. I'm a CS master's student at USC focused on AI.">
-  <meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#121210" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#121210">
   <meta property="og:title" content="Leonard Jia">
   <meta property="og:description" content="Hey, I'm Leonard. I'm a CS master's student at USC focused on AI.">
   <meta property="og:type" content="website">
@@ -18,46 +17,37 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="hero">
+  <header class="hero" id="about">
     <canvas class="hero-canvas" aria-hidden="true"></canvas>
-    <div class="hero-overlay">
-      <h1 class="hero-name">Leonard Jia</h1>
-      <nav class="hero-links" aria-label="Links">
-        <a class="link" href="https://github.com/leojia22" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
-        <a class="link" href="https://linkedin.com/in/leonardjia" target="_blank" rel="noopener">LinkedIn<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
-        <a class="link" href="resume.pdf" target="_blank" rel="noopener">Resume<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
-        <a class="link" href="mailto:jialeo2022@gmail.com">Email<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
-      </nav>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1 class="hero-name">Leonard Jia</h1>
+        <p class="hero-hello">Hello, I'm Leo.</p>
+        <p>I'm a computer science master's student at the University of Southern California, concentrating in Artificial Intelligence. Before that, I studied CS at Gonzaga University, where I graduated in 2026.</p>
+        <p>Most of what I build sits somewhere between machine learning and software people actually use: computer vision apps, privacy-preserving learning research, and tooling that lets AI agents do real work.</p>
+        <ul class="tags">
+          <li>Los Angeles, CA</li>
+          <li>MS CS @ USC</li>
+          <li>Machine learning</li>
+          <li>Computer vision</li>
+          <li>AI agents</li>
+          <li>3x TreeHacks</li>
+        </ul>
+        <nav class="hero-links" aria-label="Links">
+          <a class="link" href="https://github.com/leojia22" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+          <a class="link" href="https://linkedin.com/in/leonardjia" target="_blank" rel="noopener">LinkedIn<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+          <a class="link" href="resume.pdf" target="_blank" rel="noopener">Resume<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+          <a class="link" href="mailto:jialeo2022@gmail.com">Email<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
+        </nav>
+      </div>
+      <figure class="hero-photo">
+        <img src="photo.jpg" alt="Leonard Jia" width="800" height="1200">
+      </figure>
     </div>
-    <a class="hero-hint" href="#about">About<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4"/></svg></a>
+    <a class="hero-hint" href="#experience">Experience<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M4 9l4 4 4-4"/></svg></a>
   </header>
 
   <main>
-    <section id="about">
-      <h2 class="mast">About</h2>
-      <div class="band">
-        <div class="inner about-inner">
-          <div class="about-text">
-            <h3>Hello, I'm Leo.</h3>
-            <p>I'm a computer science master's student at the University of Southern California, concentrating in Artificial Intelligence. Before that, I studied CS at Gonzaga University, where I graduated in 2026.</p>
-            <p>Most of what I build sits somewhere between machine learning and software people actually use: computer vision apps, privacy-preserving learning research, and tooling that lets AI agents do real work.</p>
-            <p>Outside of work, I collect Pokémon cards (my whole collection is on <a class="link" href="https://app.getcollectr.com/showcase/profile/@leojia" target="_blank" rel="noopener">Collectr<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>), travel whenever I get the chance, and keep up with cars. On Sundays, you'll find me watching the Seattle Seahawks.</p>
-            <ul class="tags">
-              <li>Los Angeles, CA</li>
-              <li>MS CS @ USC</li>
-              <li>Machine learning</li>
-              <li>Computer vision</li>
-              <li>AI agents</li>
-              <li>3x TreeHacks</li>
-            </ul>
-          </div>
-          <figure class="about-photo">
-            <img src="photo.jpg" alt="Leonard Jia" width="800" height="1200" loading="lazy">
-          </figure>
-        </div>
-      </div>
-    </section>
-
     <section id="experience">
       <h2 class="mast">Experience</h2>
 
@@ -104,92 +94,138 @@
     <section id="projects">
       <h2 class="mast">Projects</h2>
 
-      <article class="card">
-        <div class="inner card-inner">
-          <div>
-            <h3>Image Processing App</h3>
-            <p class="tagline">Desktop image editing and similarity search</p>
-            <p class="period">Aug 2025 – May 2026</p>
+      <div class="wrap project-grid">
+        <article class="project">
+          <div class="project-head">
+            <div>
+              <h3>Image Processing App</h3>
+              <p class="tagline">Desktop image editing and similarity search</p>
+            </div>
+            <a class="link" href="https://github.com/CS26-17/Image-Processing-App" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
           </div>
-          <dl class="props">
-            <dt>Stack</dt><dd>Python, VGG16, ResNet50, PyInstaller</dd>
-            <dt>Platform</dt><dd>Windows, macOS</dd>
-            <dt>Code</dt><dd><a class="link" href="https://github.com/CS26-17/Image-Processing-App" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a></dd>
-          </dl>
-          <div class="desc">
-            <p>A cross-platform desktop app for image editing, with CNN-based feature extraction from pre-trained VGG16 and ResNet50 models and pairwise image similarity via cosine similarity. Packaged as a standalone executable.</p>
-          </div>
-        </div>
-      </article>
+          <p class="project-desc">A cross-platform desktop app for image editing, with CNN-based feature extraction from pre-trained VGG16 and ResNet50 models and pairwise image similarity via cosine similarity. Packaged as a standalone executable.</p>
+          <ul class="tags">
+            <li>Python</li>
+            <li>VGG16</li>
+            <li>ResNet50</li>
+            <li>PyInstaller</li>
+          </ul>
+          <p class="period">Aug 2025 – May 2026 · Windows, macOS</p>
+        </article>
 
-      <article class="card">
-        <div class="inner card-inner">
-          <div>
-            <h3>Face Recognition &amp; Management App</h3>
-            <p class="tagline">Automated photo organization</p>
-            <p class="period">Jan 2025 – May 2025</p>
+        <article class="project">
+          <div class="project-head">
+            <div>
+              <h3>Face Recognition &amp; Management App</h3>
+              <p class="tagline">Automated photo organization</p>
+            </div>
           </div>
-          <dl class="props">
-            <dt>Stack</dt><dd>DeepFace, TensorFlow, PyTorch, Pinecone</dd>
-            <dt>Platform</dt><dd>Web</dd>
-          </dl>
-          <div class="desc">
-            <p>A web app that organizes photos using facial recognition. Face detection and embedding generation run on DeepFace, enabling demographic analysis and similarity-based search through a Pinecone vector database.</p>
-          </div>
-        </div>
-      </article>
+          <p class="project-desc">A web app that organizes photos using facial recognition. Face detection and embedding generation run on DeepFace, enabling demographic analysis and similarity-based search through a Pinecone vector database.</p>
+          <ul class="tags">
+            <li>DeepFace</li>
+            <li>TensorFlow</li>
+            <li>PyTorch</li>
+            <li>Pinecone</li>
+          </ul>
+          <p class="period">Jan 2025 – May 2025 · Web</p>
+        </article>
 
-      <article class="card">
-        <div class="inner card-inner">
-          <div>
-            <h3>Stanford TreeHacks 12</h3>
-            <p class="tagline">Real-time weightlifting form correction</p>
-            <p class="period">Feb 2026</p>
+        <article class="project">
+          <div class="project-head">
+            <div>
+              <h3>Pokémon Tournament Data Dashboard</h3>
+              <p class="tagline">Deck and player analytics for competitive Pokémon</p>
+            </div>
+            <a class="link" href="https://github.com/leojia22/PokemonData" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
           </div>
-          <dl class="props">
-            <dt>Stack</dt><dd>Swift, Apple Vision, YOLOv8, Core ML</dd>
-            <dt>Code</dt><dd><a class="link" href="https://github.com/leojia22/Treehacks26" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a></dd>
-          </dl>
-          <div class="desc">
-            <p>A computer vision pipeline combining Apple Vision with a custom YOLOv8 model exported to Core ML for on-device barbell tracking, plus a biomechanics rule engine (22+ rules across 6 exercises) that flags form issues with severity-based feedback.</p>
-          </div>
-        </div>
-      </article>
+          <p class="project-desc">A web dashboard for analyzing Pokémon tournament results, built on data parsed from the Toronto Regionals. It breaks down deck popularity, win rates, and player placements, with filters by deck, country, and placement range, interactive charts, and a JSON API.</p>
+          <ul class="tags">
+            <li>Python</li>
+            <li>Flask</li>
+            <li>Pandas</li>
+            <li>D3.js</li>
+            <li>Streamlit</li>
+          </ul>
+          <p class="period">Jan 2026 · Web</p>
+        </article>
 
-      <article class="card">
-        <div class="inner card-inner">
-          <div>
-            <h3>Stanford TreeHacks 11</h3>
-            <p class="tagline">Fitness tracking with wearables</p>
-            <p class="period">Feb 2025</p>
+        <article class="project">
+          <div class="project-head">
+            <div>
+              <h3>Stanford TreeHacks 12</h3>
+              <p class="tagline">Real-time weightlifting form correction</p>
+            </div>
+            <a class="link" href="https://github.com/leojia22/Treehacks26" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
           </div>
-          <dl class="props">
-            <dt>Stack</dt><dd>React, Redux, Flask, Terra API, OpenAI API</dd>
-            <dt>Code</dt><dd><a class="link" href="https://github.com/leojia22/Treehacks25" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a></dd>
-          </dl>
-          <div class="desc">
-            <p>A full-stack platform that pulls fitness metrics from wearable devices through the Terra API, with AI-driven insights, a streak-based motivation system, and real-time progress tracking.</p>
-          </div>
-        </div>
-      </article>
+          <p class="project-desc">A computer vision pipeline combining Apple Vision with a custom YOLOv8 model exported to Core ML for on-device barbell tracking, plus a biomechanics rule engine (22+ rules across 6 exercises) that flags form issues with severity-based feedback.</p>
+          <ul class="tags">
+            <li>Swift</li>
+            <li>Apple Vision</li>
+            <li>YOLOv8</li>
+            <li>Core ML</li>
+          </ul>
+          <p class="period">Feb 2026</p>
+        </article>
 
-      <article class="card">
-        <div class="inner card-inner">
-          <div>
-            <h3>Stanford TreeHacks 10</h3>
-            <p class="tagline">Recipe sharing, but social</p>
-            <p class="period">Feb 2024</p>
+        <article class="project">
+          <div class="project-head">
+            <div>
+              <h3>Stanford TreeHacks 11</h3>
+              <p class="tagline">Fitness tracking with wearables</p>
+            </div>
+            <a class="link" href="https://github.com/leojia22/Treehacks25" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
           </div>
-          <dl class="props">
-            <dt>Stack</dt><dd>Swift, Firebase, Figma</dd>
-            <dt>Platform</dt><dd>iOS</dd>
-            <dt>Code</dt><dd><a class="link" href="https://github.com/angel8argz/CulinaryConnections" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a></dd>
-          </dl>
-          <div class="desc">
-            <p>A prototype iOS recipe-sharing and social networking app, designed in Figma and built in Swift on a Firebase backend supporting user profiles, recipe posts, and cross-account visibility of shared content.</p>
+          <p class="project-desc">A full-stack platform that pulls fitness metrics from wearable devices through the Terra API, with AI-driven insights, a streak-based motivation system, and real-time progress tracking.</p>
+          <ul class="tags">
+            <li>React</li>
+            <li>Redux</li>
+            <li>Flask</li>
+            <li>Terra API</li>
+            <li>OpenAI API</li>
+          </ul>
+          <p class="period">Feb 2025</p>
+        </article>
+
+        <article class="project">
+          <div class="project-head">
+            <div>
+              <h3>Stanford TreeHacks 10</h3>
+              <p class="tagline">Recipe sharing, but social</p>
+            </div>
+            <a class="link" href="https://github.com/angel8argz/CulinaryConnections" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>
           </div>
+          <p class="project-desc">A prototype iOS recipe-sharing and social networking app, designed in Figma and built in Swift on a Firebase backend supporting user profiles, recipe posts, and cross-account visibility of shared content.</p>
+          <ul class="tags">
+            <li>Swift</li>
+            <li>Firebase</li>
+            <li>Figma</li>
+          </ul>
+          <p class="period">Feb 2024 · iOS</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="outside">
+      <h2 class="mast">Outside of work</h2>
+
+      <div class="wrap tiles">
+        <div class="tile">
+          <h3>Pokémon cards</h3>
+          <p>I collect Pokémon cards. My whole collection is on <a class="link" href="https://app.getcollectr.com/showcase/profile/@leojia" target="_blank" rel="noopener">Collectr<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5 11 11 5M6 5h5v5"/></svg></a>.</p>
         </div>
-      </article>
+        <div class="tile">
+          <h3>Travel</h3>
+          <p>I enjoy going to places I haven't been to before.</p>
+        </div>
+        <div class="tile">
+          <h3>Cars</h3>
+          <p>Ask me about my 1990 Mazda Miata.</p>
+        </div>
+        <div class="tile">
+          <h3>Sports</h3>
+          <p>On Sundays, you'll find me watching the Seattle Seahawks.</p>
+        </div>
+      </div>
     </section>
   </main>
 

@@ -1,27 +1,40 @@
-// Hero background: a dot grid shaded like a slowly shifting loss surface.
-// The pointer digs a well into it.
+// Hero background: rows of wave lines that swell and drift like a slow tide,
+// fading from the soft accent near the surface to the full accent at depth.
+// The pointer sends ripples through them.
 (() => {
   const canvas = document.querySelector('.hero-canvas');
   const hero = canvas.parentElement;
   const ctx = canvas.getContext('2d');
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  const darkScheme = matchMedia('(prefers-color-scheme: dark)');
 
-  const SPACING = 26;
-  const WELL_RADIUS = 180;
+  const LINE_GAP = 30;
+  const STEP = 10;
+  const RIPPLE_RADIUS = 240;
 
   let width = 0;
   let height = 0;
-  let ink = '';
-  let accent = '';
+  let accent = [0, 0, 0];
+  let accentSoft = [0, 0, 0];
   let frame = 0;
   let visible = true;
   const pointer = { x: -9999, y: -9999, active: false, strength: 0 };
 
   function readColors() {
     const styles = getComputedStyle(document.documentElement);
-    ink = styles.getPropertyValue('--ink').trim();
-    accent = styles.getPropertyValue('--accent').trim();
+    const rgb = (name) => {
+      const hex = styles.getPropertyValue(name).trim().slice(1);
+      return [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16));
+    };
+    accent = rgb('--accent');
+    accentSoft = rgb('--accent-soft');
+  }
+
+  function mix(a, b, k) {
+    return a.map((v, i) => v + (b[i] - v) * k);
+  }
+
+  function rgba([r, g, b], alpha) {
+    return `rgba(${r | 0}, ${g | 0}, ${b | 0}, ${alpha})`;
   }
 
   function resize() {
@@ -34,14 +47,13 @@
     draw(performance.now());
   }
 
-  // Smooth pseudo-terrain in [0, 1].
-  function surface(x, y, t) {
-    const v =
-      Math.sin(x * 0.006 + t * 0.35) +
-      Math.sin(y * 0.008 - t * 0.28) +
-      Math.sin((x + y) * 0.004 + t * 0.2) +
-      Math.sin(Math.hypot(x - width * 0.3, y - height * 0.7) * 0.007 - t * 0.4);
-    return v / 8 + 0.5;
+  // Vertical offset of the water at (x, row): a few sines drifting past each other.
+  function swell(x, row, t) {
+    return (
+      Math.sin(x * 0.006 + row * 0.011 + t * 0.5) * 7 +
+      Math.sin(x * 0.013 + row * 0.023 - t * 0.35) * 4 +
+      Math.sin(x * 0.0025 + t * 0.2) * 9
+    );
   }
 
   function draw(now) {
@@ -49,31 +61,41 @@
     pointer.strength += ((pointer.active ? 1 : 0) - pointer.strength) * 0.08;
 
     ctx.clearRect(0, 0, width, height);
+    ctx.lineWidth = 1.2;
 
-    const offsetX = (width % SPACING) / 2;
-    const offsetY = (height % SPACING) / 2;
+    // The whole field rises and falls slowly.
+    const tide = Math.sin(t * 0.25) * 12;
 
-    for (let y = offsetY; y <= height; y += SPACING) {
-      for (let x = offsetX; x <= width; x += SPACING) {
-        const h = surface(x, y, t);
-        const dx = x - pointer.x;
-        const dy = y - pointer.y;
-        const dist = Math.hypot(dx, dy);
-        const well = pointer.strength * Math.max(0, 1 - dist / WELL_RADIUS) ** 2;
+    for (let row = LINE_GAP / 2; row < height + LINE_GAP; row += LINE_GAP) {
+      const depth = Math.min(1, row / height);
+      const y0 = row + tide * (0.3 + depth);
+      const reach = 0.4 + depth * 0.8;
 
-        // Dots slide toward the bottom of the well.
-        const pull = well * 10;
-        const px = dist > 0 ? x - (dx / dist) * pull : x;
-        const py = dist > 0 ? y - (dy / dist) * pull : y;
-
-        ctx.globalAlpha = 0.12 + h * 0.3 + well * 0.6;
-        ctx.fillStyle = well > 0.02 ? accent : ink;
-        ctx.beginPath();
-        ctx.arc(px, py, 0.8 + h * 1.6 + well * 1.8, 0, Math.PI * 2);
-        ctx.fill();
+      ctx.beginPath();
+      for (let x = -STEP; x <= width + STEP; x += STEP) {
+        const dist = Math.hypot(x - pointer.x, y0 - pointer.y);
+        const near = pointer.strength * Math.max(0, 1 - dist / RIPPLE_RADIUS) ** 2;
+        const y = y0 + swell(x, row, t) * reach + Math.sin(dist * 0.07 - t * 5) * near * 9;
+        if (x === -STEP) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
       }
+
+      const color = mix(accentSoft, accent, depth);
+      const alpha = 0.07 + depth * depth * 0.45;
+      const glow = pointer.strength * Math.max(0, 1 - Math.abs(y0 - pointer.y) / RIPPLE_RADIUS) ** 2;
+
+      if (glow > 0.01) {
+        // Lines brighten where they pass under the pointer.
+        const grad = ctx.createLinearGradient(pointer.x - RIPPLE_RADIUS, 0, pointer.x + RIPPLE_RADIUS, 0);
+        grad.addColorStop(0, rgba(color, alpha));
+        grad.addColorStop(0.5, rgba(mix(color, accent, glow), Math.min(1, alpha + glow * 0.7)));
+        grad.addColorStop(1, rgba(color, alpha));
+        ctx.strokeStyle = grad;
+      } else {
+        ctx.strokeStyle = rgba(color, alpha);
+      }
+      ctx.stroke();
     }
-    ctx.globalAlpha = 1;
   }
 
   function loop(now) {
@@ -99,8 +121,8 @@
     start();
   }).observe(hero);
   document.addEventListener('visibilitychange', start);
-  darkScheme.addEventListener('change', readColors);
-  window.addEventListener('resize', resize);
+  // The hero grows with its content on small screens, so watch it rather than the window.
+  new ResizeObserver(resize).observe(hero);
 
   readColors();
   resize();
