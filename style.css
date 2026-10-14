@@ -362,6 +362,7 @@ h3 {
 }
 
 .signoff cite { font-style: normal; }
+.signoff cite small { font-size: 0.8em; opacity: 0.75; }
 
 .footer-site { margin-top: clamp(40px, 6vw, 64px); }
 
